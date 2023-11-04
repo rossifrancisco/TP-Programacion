@@ -46,7 +46,7 @@ Algoritmo vacunatorio
 				FinSi
 			caso 2:
 				Limpiar Pantalla
-				Mostrar "opcion 2"
+				buscarpacientes(datosPacientes)
 				Esperar Tecla
 			caso 3:
 				Limpiar Pantalla
@@ -227,7 +227,7 @@ SubProceso cargaDatosPacientes(turnos, datosPacientes, contador Por Referencia, 
 	Mientras Que DNI<1000000 o DNI>99999999
 	
 	Mostrar "ingrese su edad"
-	Mostrar "si la edad es menor a un año puede ingresar la cantidad de meses de la siguiente forma"
+	Mostrar "si la edad es menor a un aÃ±o puede ingresar la cantidad de meses de la siguiente forma"
 	Mostrar "ejemplo 0.6 para seis meses"
 	Repetir
 		leer edad
@@ -362,6 +362,7 @@ SubProceso mostrarDatos(datosPacientes)
 	para i=0 Hasta 39 Hacer
 		si datosPacientes[i,0] <> "" Entonces
 			Mostrar "paciente: ", i+1
+
 			muestra(datosPacientes, i)
 		FinSi
 	FinPara
@@ -382,9 +383,9 @@ subproceso muestra(datosPacientes, i)
 			Mostrar " meses"
 		SiNo
 			si convertiranumero(datosPacientes[i,2])=1 Entonces
-				Mostrar " año"
+				Mostrar " aÃ±o"
 			sino
-				Mostrar " años"
+				Mostrar " aÃ±os"
 			FinSi
 		FinSi
 	FinSi
@@ -418,3 +419,34 @@ SubProceso cantidadVacunasTipos(neumococo, poliomielitis, quintuple, rotavirus, 
 	Mostrar ""
 	Mostrar "presione una tecla para volver al menu"
 FinSubProceso
+// buscar pacientes 
+subproceso buscarpacientes(datospacientes)
+	definir encontrado como logico 
+	encontrado = falso
+	Mostrar" ingresar el dni a buscar "
+	Definir dni,i como entero 
+	i=0
+	leer dni 
+	repetir 
+		si convertiranumero(datospacientes[i,1]) = dni Entonces 
+			muestra(datosPacientes, i)
+			encontrado = verdadero
+			Esperar tecla 
+		sino 
+		
+		
+			
+			
+			i=i+1
+			
+		FinSi
+	Mientras Que i<40 y no encontrado 
+	si no encontrado entonces 
+		mostrar "paciente no encontrado"
+		esperar tecla 
+	finsi
+finsubproceso 
+	
+	
+	
+	
