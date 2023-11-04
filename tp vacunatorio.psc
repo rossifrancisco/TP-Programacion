@@ -1,4 +1,4 @@
-Proceso vacuna
+proceso vacuna 2023
 	// Declaración de variables
 	
 	const int MAX_TURNOS = 5;txt
