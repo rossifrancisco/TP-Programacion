@@ -1,5 +1,6 @@
 Algoritmo vacunatorio
 	definir opcion1, opcion2, contador, neumococo, poliomielitis, quintuple, rotavirus, meningococo, tripleViral, lunes, martes, miercoles, jueves, viernes Como Entero
+	definir aiuda Como Caracter
 	contador=0
 	neumococo=10
 	poliomielitis=10
@@ -24,11 +25,27 @@ Algoritmo vacunatorio
 		Mostrar "3. ver agenda vacunatorio"
 		Mostrar "4. lista de pacientes ordenada"
 		Mostrar "5. ver cantidades"
-		Mostrar "0. salir"
+		Mostrar "SALIR para cerrar el programa"
 		Repetir
-			leer opcion1
-			si opcion1<0 o opcion1>5 entonces
+			leer aiuda
+			si longitud(aiuda) = 1 y mayusculas(aiuda) >= "A" y mayusculas(aiuda) <= "Z" Entonces
 				Mostrar "opcion invalida, ingrese otra"
+				opcion1=-1
+			SiNo
+				si Longitud(aiuda) =1 Entonces
+					Opcion1=ConvertirANumero(aiuda)
+					si opcion1<1 o opcion1>5 Entonces
+						Mostrar "opcion invalida, ingrese otra"
+						opcion1=-1
+					FinSi
+				SiNo
+					si Mayusculas(aiuda)="SALIR" Entonces
+						opcion1=0
+					SiNo
+						Mostrar "opcion invalida, ingrese otra"
+						opcion1=-1
+					FinSi
+				FinSi
 			FinSi
 		Mientras Que opcion1<0 o opcion1>5
 		
@@ -56,11 +73,6 @@ Algoritmo vacunatorio
 				Esperar Tecla
 			caso 4:
 				repetir
-					
-					Limpiar Pantalla
-					mostrarDatos(datosPacientes)
-					Esperar Tecla
-					
 					Limpiar Pantalla
 					Mostrar "1. ordenar por edad"
 					Mostrar "2. ordenar por vacuna"
@@ -75,11 +87,14 @@ Algoritmo vacunatorio
 					segun opcion2 Hacer
 						caso 1:
 							Limpiar Pantalla
-							Mostrar "opcion 1"
+							ordenEdad(datosPacientes)
+							mostrarDatos(datosPacientes)
 							Esperar Tecla
 						caso 2:
 							Limpiar Pantalla
-							Mostrar "opcion 2"
+							ordenEdad(datosPacientes)
+							ordenVacuna(datosPacientes)
+							mostrarDatos(datosPacientes)
 							Esperar Tecla
 						caso 0:
 						De Otro Modo:
@@ -227,7 +242,7 @@ SubProceso cargaDatosPacientes(turnos, datosPacientes, contador Por Referencia, 
 	Mientras Que DNI<1000000 o DNI>99999999
 	
 	Mostrar "ingrese su edad"
-	Mostrar "si la edad es menor a un aÃ±o puede ingresar la cantidad de meses de la siguiente forma"
+	Mostrar "si la edad es menor a un año puede ingresar la cantidad de meses de la siguiente forma"
 	Mostrar "ejemplo 0.6 para seis meses"
 	Repetir
 		leer edad
@@ -383,9 +398,9 @@ subproceso muestra(datosPacientes, i)
 			Mostrar " meses"
 		SiNo
 			si convertiranumero(datosPacientes[i,2])=1 Entonces
-				Mostrar " aÃ±o"
+				Mostrar " año"
 			sino
-				Mostrar " aÃ±os"
+				Mostrar " años"
 			FinSi
 		FinSi
 	FinSi
@@ -419,6 +434,9 @@ SubProceso cantidadVacunasTipos(neumococo, poliomielitis, quintuple, rotavirus, 
 	Mostrar ""
 	Mostrar "presione una tecla para volver al menu"
 FinSubProceso
+
+
+
 // buscar pacientes 
 subproceso buscarpacientes(datospacientes)
 	definir encontrado como logico 
@@ -433,12 +451,7 @@ subproceso buscarpacientes(datospacientes)
 			encontrado = verdadero
 			Esperar tecla 
 		sino 
-		
-		
-			
-			
 			i=i+1
-			
 		FinSi
 	Mientras Que i<40 y no encontrado 
 	si no encontrado entonces 
@@ -447,6 +460,105 @@ subproceso buscarpacientes(datospacientes)
 	finsi
 finsubproceso 
 	
+
+
+//ORDENAR POR EDAD 
+SubProceso ordenEdad(datosPacientes)
+	definir i, j Como Entero
+	Definir aux Como caracter
+	Para i=0 Hasta 38 Hacer
+		para j=i+1 Hasta 39 Hacer
+			si ConvertirANumero(datosPacientes[j,2]) <> 0 Entonces
+				si ConvertirANumero(datosPacientes[i,2]) > ConvertirANumero(datosPacientes[j,2]) Entonces
+					aux = datosPacientes[i,0]
+					datosPacientes[i,0] = datosPacientes[j,0]
+					datosPacientes[j,0] = aux
+					aux = datosPacientes[i,1]
+					datosPacientes[i,1] = datosPacientes[j,1]
+					datosPacientes[j,1] = aux
+					aux = datosPacientes[i,2]
+					datosPacientes[i,2] = datosPacientes[j,2]
+					datosPacientes[j,2] = aux
+					aux = datosPacientes[i,3]
+					datosPacientes[i,3] = datosPacientes[j,3]
+					datosPacientes[j,3] = aux
+					aux = datosPacientes[i,4]
+					datosPacientes[i,4] = datosPacientes[j,4]
+					datosPacientes[j,4] = aux
+					aux = datosPacientes[i,5]
+					datosPacientes[i,5] = datosPacientes[j,5]
+					datosPacientes[j,5] = aux
+				FinSi
+			FinSi
+		FinPara
+	FinPara
+FinSubProceso
+
+
+
+//ORDEN POR VACUNA
+SubProceso ordenVacuna(datosPacientes)
+	definir i, j Como Entero
+	Definir aux Como caracter
 	
+	Para i=0 Hasta 39 Hacer
+		Segun datosPacientes[i,3] Hacer
+			caso "neumococo":
+				datosPacientes[i,3] = "1"
+			caso "poliomielitis":
+				datosPacientes[i,3] = "2"
+			caso "quintuple":
+				datosPacientes[i,3] = "3"
+			caso "rotavirus":
+				datosPacientes[i,3] = "4"
+			caso "meningococo":
+				datosPacientes[i,3] = "5"
+			caso "triple viral":
+				datosPacientes[i,3] = "6"
+		FinSegun
+	FinPara
 	
+	Para i=0 Hasta 38 Hacer
+		para j=i+1 Hasta 39 Hacer
+			si ConvertirANumero(datosPacientes[j,2]) <> 0 Entonces
+				si ConvertirANumero(datosPacientes[i,3]) > ConvertirANumero(datosPacientes[j,3]) Entonces
+					aux = datosPacientes[i,0]
+					datosPacientes[i,0] = datosPacientes[j,0]
+					datosPacientes[j,0] = aux
+					aux = datosPacientes[i,1]
+					datosPacientes[i,1] = datosPacientes[j,1]
+					datosPacientes[j,1] = aux
+					aux = datosPacientes[i,2]
+					datosPacientes[i,2] = datosPacientes[j,2]
+					datosPacientes[j,2] = aux
+					aux = datosPacientes[i,3]
+					datosPacientes[i,3] = datosPacientes[j,3]
+					datosPacientes[j,3] = aux
+					aux = datosPacientes[i,4]
+					datosPacientes[i,4] = datosPacientes[j,4]
+					datosPacientes[j,4] = aux
+					aux = datosPacientes[i,5]
+					datosPacientes[i,5] = datosPacientes[j,5]
+					datosPacientes[j,5] = aux
+				FinSi
+			FinSi
+		FinPara
+	FinPara
 	
+	Para i=0 Hasta 39 Hacer
+		Segun datosPacientes[i,3] Hacer
+			caso "1":
+				datosPacientes[i,3] = "neumococo"
+			caso "2":
+				datosPacientes[i,3] = "poliomielitis"
+			caso "3":
+				datosPacientes[i,3] = "quintuple"
+			caso "4":
+				datosPacientes[i,3] = "rotavirus"
+			caso "5":
+				datosPacientes[i,3] = "meningococo"
+			caso "6":
+				datosPacientes[i,3] = "triple viral"
+		FinSegun
+	FinPara
+FinSubProceso
