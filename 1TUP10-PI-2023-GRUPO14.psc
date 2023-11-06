@@ -456,7 +456,6 @@ subproceso buscarpacientes(datospacientes)
 	Mientras Que i<40 y no encontrado 
 	si no encontrado entonces 
 		mostrar "paciente no encontrado"
-		esperar tecla 
 	finsi
 finsubproceso 
 	
